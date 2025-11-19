@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Student Management System</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">S</div>
+      <div>
+        <h1>Student Management System</h1>
+        <div class="subtitle">Efficient • Automated • User-friendly</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="chip">Mirko Lacanglacang & Angelo Cempron</div>
+      <button id="openSlidesBtn" class="btn btn-ghost">Slides</button>
+      <button id="logoutBtn" class="btn btn-ghost">Logout</button>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+<nav class="nav">
+  <button id="homeBtn" class="nav-btn active">
+    <span class="nav-icon glow-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-4H9v4a2 2 0 0 1-2 2H3z"/></svg>
+    </span>
+    Home
+  </button>
+
+  <button id="studentsBtn" class="nav-btn">
+    <span class="nav-icon glow-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+    </span>
+    Students
+  </button>
+
+  <button id="overviewBtn" class="nav-btn">
+    <span class="nav-icon glow-icon">
+      <svg viewBox="0 0 24 24"><path d="M4 13h6V4H4v9zm0 7h6v-5H4v5zm10 0h6V11h-6v9zm0-18v7h6V2h-6z"/></svg>
+    </span>
+    Overview
+  </button>
+</nav>
+
+  <!-- Main Area -->
+  <main id="mainArea">
+    <!-- Dashboard -->
+    <section id="dashboardView" class="card content-view">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h4>Total Students</h4>
+          <div id="totalStudents">0</div>
+        </div>
+        <div class="stat-card">
+          <h4>Present</h4>
+          <div id="presentCount">0</div>
+        </div>
+        <div class="stat-card">
+          <h4>Absent</h4>
+          <div id="absentCount">0</div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="search">
+          🔎 <input id="searchInput" placeholder="Search by name or ID" />
+        </div>
+        <div class="toolbar-actions">
+          <button id="addBtn" class="btn btn-primary pulse">＋ Add Student</button>
+          <button id="exportBtn" class="btn btn-ghost">Export CSV</button>
+          <button id="clearBtn" class="btn btn-ghost">Clear All</button>
+        </div>
+      </div>
+
+      <table id="studentsTable" class="students-table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Name</th><th>Attendance</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Students View -->
+    <section id="studentsView" class="card content-view" style="display:none">
+      <h3>Students Management</h3>
+      <p class="small">Sortable, editable list of students</p>
+      <div class="toolbar">
+        <div class="search">
+          🔎 <input id="studentSearchInput" placeholder="Search students..." />
+        </div>
+      </div>
+      <table id="studentsViewTable" class="students-table">
+        <thead>
+          <tr>
+            <th data-sort="id">ID ⬍</th>
+            <th data-sort="name">Name ⬍</th>
+            <th data-sort="attendance">Attendance ⬍</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Overview -->
+    <section id="overviewView" class="card content-view" style="display:none">
+      <h3>Overview</h3>
+      <p class="small">Manage students and attendance easily with real-time updates.</p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon">🔒</div>
+          <h4>Secure Login</h4>
+          <p>Persistent login with logout option for security.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">➕</div>
+          <h4>Add Students</h4>
+          <p>Add or edit student records using modal forms.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📅</div>
+          <h4>Attendance Tracking</h4>
+          <p>Toggle attendance in real-time with instant updates.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🔍</div>
+          <h4>Search & Filter</h4>
+          <p>Find students quickly by name or ID.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📄</div>
+          <h4>Report Generation</h4>
+          <p>Export student records as CSV files for reports.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Add/Edit Modal -->
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal">
+      <h3 id="modalTitle">Add Student</h3>
+      <div class="grid">
+        <div class="field"><label class="small">Student ID</label><input id="studentId" type="text" /></div>
+        <div class="field"><label class="small">Name</label><input id="studentName" type="text" /></div>
+        <div class="field"><label class="small">Attendance</label>
+          <select id="studentAttendance"><option value="present">Present</option><option value="absent">Absent</option></select>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button id="cancelModal" class="btn btn-ghost">Cancel</button>
+        <button id="saveStudent" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Screen -->
+  <div id="loginScreen" class="login-screen" style="display:none">
+    <div class="login-card">
+      <h2>Welcome</h2>
+      <p class="small">Please login to continue</p>
+      <input id="loginUser" placeholder="Username" />
+      <input id="loginPass" placeholder="Password" type="password" />
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button id="loginBtn" class="btn btn-primary">Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Particles -->
+  <canvas id="particles"></canvas>
+
+  <script src="app.js"></script>
+</body>
+</html>
